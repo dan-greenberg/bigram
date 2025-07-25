@@ -2,7 +2,7 @@ import sys
 
 
 def bigram(input):
-    return ""
+    return input
 
 
 def main():

@@ -8,30 +8,45 @@ usage() {
   exit 1
 }
 
+# Args required
+if [[ $# -eq 0 ]]; then
+  usage
+fi
+
+mode=""
+input_text=""
+
 # Accepts either -f or -t
-while getopts ":f:t:" opt; do
-  case ${opt} in
-    f )
-      input_text=$(<"$OPTARG") || { echo "Error reading file $OPTARG"; exit 1; }
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -f)
+      mode="file"
+      shift
+      [[ -z "$1" ]] && { echo "Filename required with -f flag"; usage; }
+      [[ ! -f "$1" ]] && { echo "Error reading file $1"; exit 1; }
+      input_text=$(<"$1")
+      shift
       ;;
-    t )
-      input_text="$OPTARG"
+    -t)
+      mode="text"
+      shift
+      [[ $# -eq 0 ]] && { echo "Missing text after -t flag"; usage; }
+      input_text="$*"
+      break
       ;;
-    \? )
-      echo "Invalid option: -$OPTARG"
+    -*)
+      echo "Invalid option: $1"
       usage
       ;;
-    : )
-      echo "Missing argument for -$OPTARG"
+    *)
+      echo "Unexpected argument: $1"
       usage
       ;;
   esac
 done
 
-# Only valid options are -f and -t
-if [[ -z "$input_text" || "$OPTIND" -ne 3 ]]; then
-  usage
-fi
+# mode should have been set
+[[ -z "$mode" ]] && usage
 
 # If no errors, pass input to script
 python3 main.py "$input_text"
