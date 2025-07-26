@@ -7,7 +7,7 @@ def bigram(input_text):
     running_bigram = {}
 
     # split the sentence
-    words = input_text.split()
+    words = input_text.lower().split()
 
     for i, word in enumerate(words):
         # if it's not the last word
