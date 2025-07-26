@@ -36,17 +36,21 @@ You can run the code with either a file input or text from the command line.
 
 ### File input
 ```bash
-$ ./bigram.sh -f path/to/input.txt
+./bigram.sh -f path/to/input.txt
 ```
 
 ### Text input
 ```bash
-$ ./bigram.sh -t "This is an example input."
+./bigram.sh -t "This is an example input."
 ```
 
 ### Example
 ```bash
-$ ./bigram.sh -t "The quick brown fox and the quick blue hare."
+./bigram.sh -t "The quick brown fox and the quick blue hare."
+```
+
+### Output
+```bash
 "the quick": 2
 "quick brown": 1
 "brown fox": 1
@@ -61,6 +65,6 @@ $ ./bigram.sh -t "The quick brown fox and the quick blue hare."
 Tests are run with pytest.
 
 ```bash
-$ pytest
+pytest
 ```
 
